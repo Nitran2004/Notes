@@ -54,11 +54,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="AppShell.xaml.cs">
-	    <DependentUpon>AppShell.xaml</DependentUpon>
+	  <Compile Update="MZAppShell.xaml.cs">
+	    <DependentUpon>MZAppShell.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="App.xaml.cs">
-	    <DependentUpon>App.xaml</DependentUpon>
+	  <Compile Update="MZApp.xaml.cs">
+	    <DependentUpon>MZApp.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\MZAllNotesPage.xaml.cs">
 	    <DependentUpon>MZAllNotesPage.xaml</DependentUpon>
