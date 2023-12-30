@@ -10,17 +10,17 @@ using System.Windows.Input;
 
 namespace Notes.ViewModels;
 
-internal class NotesViewModel : IQueryAttributable
+internal class MZNotesViewModel : IQueryAttributable
 {
-    public ObservableCollection<ViewModels.NoteViewModel> AllNotes { get; }
+    public ObservableCollection<ViewModels.MZNoteViewModel> AllNotes { get; }
     public ICommand NewCommand { get; }
     public ICommand SelectNoteCommand { get; }
 
-    public NotesViewModel()
+    public MZNotesViewModel()
     {
-        AllNotes = new ObservableCollection<ViewModels.NoteViewModel>(Models.Note.LoadAll().Select(n => new NoteViewModel(n)));
+        AllNotes = new ObservableCollection<ViewModels.MZNoteViewModel>(Models.MZNote.LoadAll().Select(n => new MZNoteViewModel(n)));
         NewCommand = new AsyncRelayCommand(NewNoteAsync);
-        SelectNoteCommand = new AsyncRelayCommand<ViewModels.NoteViewModel>(SelectNoteAsync);
+        SelectNoteCommand = new AsyncRelayCommand<ViewModels.MZNoteViewModel>(SelectNoteAsync);
     }
 
     private async Task NewNoteAsync()
@@ -28,7 +28,7 @@ internal class NotesViewModel : IQueryAttributable
         await Shell.Current.GoToAsync(nameof(Views.NotePage));
     }
 
-    private async Task SelectNoteAsync(ViewModels.NoteViewModel note)
+    private async Task SelectNoteAsync(ViewModels.MZNoteViewModel note)
     {
         if (note != null)
             await Shell.Current.GoToAsync($"{nameof(Views.NotePage)}?load={note.Identifier}");
@@ -39,7 +39,7 @@ internal class NotesViewModel : IQueryAttributable
         if (query.ContainsKey("deleted"))
         {
             string noteId = query["deleted"].ToString();
-            NoteViewModel matchedNote = AllNotes.Where((n) => n.Identifier == noteId).FirstOrDefault();
+            MZNoteViewModel matchedNote = AllNotes.Where((n) => n.Identifier == noteId).FirstOrDefault();
 
             // If note exists, delete it
             if (matchedNote != null)
@@ -48,7 +48,7 @@ internal class NotesViewModel : IQueryAttributable
         else if (query.ContainsKey("saved"))
         {
             string noteId = query["saved"].ToString();
-            NoteViewModel matchedNote = AllNotes.Where((n) => n.Identifier == noteId).FirstOrDefault();
+            MZNoteViewModel matchedNote = AllNotes.Where((n) => n.Identifier == noteId).FirstOrDefault();
 
             // If note is found, update it
             if (matchedNote != null)
@@ -58,7 +58,7 @@ internal class NotesViewModel : IQueryAttributable
             }
             // If note isn't found, it's new; add it.
             else
-                AllNotes.Insert(0, new NoteViewModel(Models.Note.Load(noteId)));
+                AllNotes.Insert(0, new MZNoteViewModel(Models.MZNote.Load(noteId)));
         }
     }
 }

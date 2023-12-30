@@ -5,7 +5,7 @@
              Title="Your Notes"
              NavigatedTo="ContentPage_NavigatedTo">
     <ContentPage.BindingContext>
-        <viewModels:NotesViewModel />
+        <viewModels:MZNotesViewModel/>
     </ContentPage.BindingContext>
 
     <!-- Add an item to the toolbar -->

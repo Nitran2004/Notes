@@ -9,38 +9,38 @@ using System.Windows.Input;
 
 namespace Notes.ViewModels;
 
-internal class NoteViewModel : ObservableObject, IQueryAttributable
+internal class MZNoteViewModel : ObservableObject, IQueryAttributable
 {
-    private Models.Note _note;
+    private Models.MZNote _note;
 
     public string Text
     {
-        get => _note.Text;
+        get => _note.mzText;
         set
         {
-            if (_note.Text != value)
+            if (_note.mzText != value)
             {
-                _note.Text = value;
+                _note.mzText = value;
                 OnPropertyChanged();
             }
         }
     }
 
-    public DateTime Date => _note.Date;
+    public DateTime Date => _note.mzDate;
 
-    public string Identifier => _note.Filename;
+    public string Identifier => _note.mzFilename;
 
     public ICommand SaveCommand { get; private set; }
     public ICommand DeleteCommand { get; private set; }
 
-    public NoteViewModel()
+    public MZNoteViewModel()
     {
-        _note = new Models.Note();
+        _note = new Models.MZNote();
         SaveCommand = new AsyncRelayCommand(Save);
         DeleteCommand = new AsyncRelayCommand(Delete);
     }
 
-    public NoteViewModel(Models.Note note)
+    public MZNoteViewModel(Models.MZNote note)
     {
         _note = note;
         SaveCommand = new AsyncRelayCommand(Save);
@@ -49,29 +49,29 @@ internal class NoteViewModel : ObservableObject, IQueryAttributable
 
     private async Task Save()
     {
-        _note.Date = DateTime.Now;
+        _note.mzDate = DateTime.Now;
         _note.Save();
-        await Shell.Current.GoToAsync($"..?saved={_note.Filename}");
+        await Shell.Current.GoToAsync($"..?saved={_note.mzFilename}");
     }
 
     private async Task Delete()
     {
         _note.Delete();
-        await Shell.Current.GoToAsync($"..?deleted={_note.Filename}");
+        await Shell.Current.GoToAsync($"..?deleted={_note.mzFilename}");
     }
 
     void IQueryAttributable.ApplyQueryAttributes(IDictionary<string, object> query)
     {
         if (query.ContainsKey("load"))
         {
-            _note = Models.Note.Load(query["load"].ToString());
+            _note = Models.MZNote.Load(query["load"].ToString());
             RefreshProperties();
         }
     }
 
     public void Reload()
     {
-        _note = Models.Note.Load(_note.Filename);
+        _note = Models.MZNote.Load(_note.mzFilename);
         RefreshProperties();
     }
 

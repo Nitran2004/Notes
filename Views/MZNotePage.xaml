@@ -5,7 +5,7 @@
              x:Class="Notes.Views.NotePage"
              Title="Note">
     <ContentPage.BindingContext>
-        <viewModels:NoteViewModel />
+        <viewModels:MZNoteViewModel/>
     </ContentPage.BindingContext>
     <VerticalStackLayout Spacing="10" Margin="5">
         <Editor x:Name="TextEditor"
